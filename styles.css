@@ -201,88 +201,7 @@ button:focus-visible {
   padding: 100px 0 90px;
 }
 
-.hero-chess {
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
-  width: 420px;
-  height: 420px;
-  pointer-events: none;
-}
 
-.chess-board-svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45));
-}
-
-.sq-light {
-  fill: #E8E4D9;
-}
-
-.sq-dark {
-  fill: #2A3148;
-}
-
-/* Torre dorada */
-.rook-gold {
-  fill: #D9B53A;
-  animation: goldCapture 12s ease-in-out infinite;
-}
-
-.rook-gold path {
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55));
-}
-
-/* Torre negra */
-.rook-black {
-  fill: #B8C5D1;
-  animation: blackCapture 12s ease-in-out infinite;
-}
-
-.rook-black path {
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65));
-}
-
-/*
-  Secuencia (12s loop):
-  0-8%   → Dorada en col 0, Negra en col 2 (ambas estáticas)
-  8-33%  → Dorada se mueve hacia la negra (col 0→2)
-  33%    → Captura: negra desaparece
-  35-40% → Negra reaparece en col 0
-  40-65% → Negra se mueve hacia la dorada (col 0→2)
-  65-66% → Captura: dorada desaparece
-  67-69% → Dorada reaparece en col 0
-  69-100%→ Reset: dorada en col 0, negra en col 2 → loop
-*/
-@keyframes goldCapture {
-  0%, 8%     { transform: translateX(0);      opacity: 1; }
-  33%        { transform: translateX(180px);  opacity: 1; }
-  65%        { transform: translateX(180px);  opacity: 1; }
-  66%        { transform: translateX(180px);  opacity: 0; }
-  67%        { transform: translateX(0);      opacity: 0; }
-  69%, 100%  { transform: translateX(0);      opacity: 1; }
-}
-
-@keyframes blackCapture {
-  0%, 33%    { transform: translateX(180px);  opacity: 1; }
-  34%        { transform: translateX(180px);  opacity: 0; }
-  35%        { transform: translateX(0);      opacity: 0; }
-  40%        { transform: translateX(0);      opacity: 1; }
-  65%        { transform: translateX(180px);  opacity: 1; }
-  100%       { transform: translateX(180px);  opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rook-gold,
-  .rook-black {
-    animation: none;
-  }
-  .rook-black {
-    transform: translateX(180px);
-  }
-}
 
 .hero-inner {
   position: relative;
@@ -847,22 +766,11 @@ section {
    RESPONSIVE
    ==================================== */
 
-@media (max-width: 1180px) {
-  .hero-chess {
-    width: 360px;
-    height: 360px;
-    opacity: 0.8;
-  }
-}
-
 /* ====================================
    TABLET (≤ 1024px)
    ==================================== */
 
 @media (max-width: 1024px) {
-  .hero-chess {
-    display: none;
-  }
   section {
     padding: 72px 0;
   }
