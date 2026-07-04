@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Torre Oscura — Club de Ajedrez | Colegio Secundario Manuel Belgrano</title>
+<meta name="description" content="Club de ajedrez del Colegio Secundario Manuel Belgrano. Clases para principiantes, torneos internos y actividad libre en los recreos. Sumate los miércoles y viernes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#inicio" class="brand">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="goldGradHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#A8821E"/>
+            <stop offset="50%" stop-color="#F0D670"/>
+            <stop offset="100%" stop-color="#A8821E"/>
+          </linearGradient>
+        </defs>
+        <path d="M6 21h12M7 21v-3.5h10V21M6.5 17.5l1-7h9l1 7M8 10.5V7h1.5V5h1V7h1V5h1V7h1V5h1V7H16v3.5" stroke="url(#goldGradHeader)" stroke-width="1.3" stroke-linejoin="round"/>
+      </svg>
+      La Torre Oscura
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="#inicio" class="active">Inicio</a>
+      <a href="#club">El club</a>
+      <a href="#torneos">Torneos</a>
+      <a href="#aprender">Aprender</a>
+      <a href="reglamento.html">Reglamento</a>
+      <a href="cuentos.html">Cuentos</a>
+      <a href="#inscripcion" class="nav-cta">Inscribirme</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <section class="hero">
+    <div class="hero-chess" aria-hidden="true">
+      <svg class="chess-board-svg" viewBox="0 0 270 270" xmlns="http://www.w3.org/2000/svg">
+        <g class="board-squares">
+          <rect x="0"   y="0"   width="90" height="90" class="sq sq-light"/>
+          <rect x="90"  y="0"   width="90" height="90" class="sq sq-dark"/>
+          <rect x="180" y="0"   width="90" height="90" class="sq sq-light"/>
+          <rect x="0"   y="90"  width="90" height="90" class="sq sq-dark"/>
+          <rect x="90"  y="90"  width="90" height="90" class="sq sq-light"/>
+          <rect x="180" y="90"  width="90" height="90" class="sq sq-dark"/>
+          <rect x="0"   y="180" width="90" height="90" class="sq sq-light"/>
+          <rect x="90"  y="180" width="90" height="90" class="sq sq-dark"/>
+          <rect x="180" y="180" width="90" height="90" class="sq sq-light"/>
+        </g>
+        <!-- Torre dorada: empieza en 1A (fila inferior), se desliza a 2A dando jaque mate -->
+        <g class="piece-rook" id="rookCheckmate">
+          <path transform="translate(20, 106) scale(0.5)" d="M 6.4,0.4 L 5.4,22.9 L 19.6,34.3 L 19.6,75.7 L 7.9,88.2 L 7.5,98.9 L 0.0,101.1 L 0.4,114.3 L 98.2,115.4 L 99.3,100.7 L 92.5,99.3 L 91.8,88.2 L 80.0,75.4 L 80.0,34.3 L 94.3,22.9 L 93.9,0.7 L 75.4,0.0 L 72.5,8.9 L 63.2,8.9 L 61.1,0.4 L 39.6,0.0 L 36.8,8.9 L 27.5,8.9 L 25.4,0.4 Z"/>
+        </g>
+        <!-- Dama plateada: estática en 2B -->
+        <g class="piece-queen">
+          <path transform="translate(20, 106) scale(0.5)" d="M 5,115 L 10,72 L 0,20 L 28,52 L 50,2 L 72,52 L 100,20 L 90,72 L 95,115 Z"/>
+        </g>
+        <!-- Rey rojo: mitad superior (cruz), en 2C — se parte al recibir jaque mate -->
+        <g class="piece-king-upper" id="kingUpper">
+          <path transform="translate(20, 106) scale(0.5)" d="M 20,57 L 20,45 L 5,45 L 5,30 L 20,30 L 20,10 L 40,10 L 40,22 L 60,22 L 60,10 L 80,10 L 80,30 L 95,30 L 95,45 L 80,45 L 80,57 Z"/>
+        </g>
+        <!-- Rey rojo: mitad inferior (base), en 2C -->
+        <g class="piece-king-lower" id="kingLower">
+          <path transform="translate(20, 106) scale(0.5)" d="M 5,115 L 10,78 L 20,66 L 20,57 L 80,57 L 80,66 L 90,78 L 95,115 Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="container hero-inner">
+      <span class="hero-eyebrow">Ciclo 2025 · Inscripción abierta</span>
+      <h1>Pensá cada<br>movimiento. <em>Dominá el juego.</em></h1>
+      <p class="hero-sub">El club de ajedrez del Manuel Belgrano. Clases para quienes recién empiezan, torneos internos por nivel y un lugar para jugar todos los días en el recreo.</p>
+      <div class="hero-meta">
+        <div>
+          <strong>Días</strong>
+          Miércoles y viernes
+        </div>
+        <div>
+          <strong>Horario</strong>
+          17:50 a 19:00 hs
+        </div>
+        <div>
+          <strong>Además</strong>
+          Todos los recreos
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#inscripcion" class="btn btn-gold">Inscribirme al club</a>
+        <a href="#aprender" class="btn btn-outline">Nunca jugué, ¿por dónde arranco?</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="schedule-strip">
+    <div class="container">
+      <div class="schedule-item">
+        <span class="label">Profesor</span>
+        <span class="value">Hugo Daniel Ojeda</span>
+      </div>
+      <div class="schedule-item">
+        <span class="label">Nivel</span>
+        <span class="value">Desde cero hasta competitivo</span>
+      </div>
+      <div class="schedule-item">
+        <span class="label">Lugar</span>
+        <span class="value">Colegio Secundario Manuel Belgrano</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="club">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">El club</span>
+        <h2>Así se juega en La Torre Oscura</h2>
+        <p>Entre partidas y aperturas, también hay lugar para equivocarse, volver a empezar y mejorar jugada a jugada.</p>
+      </div>
+      <div class="activity-grid">
+        <div class="activity-card reveal">
+          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUD7stHBsVBfg4dVhMm0924MUVT6jmYbmJVuQBzkrGSXJTZthwX88XPli39H2AMrYpMquLHHXe3gohO-cs7LDyqPPeqWwrOY0qkaGUuf2HmW25X5nNiXUbsM7WizA3-nCQ0cVgLo6J_Uvn0A8ttkNWzX78Yoa6QckCyIqT_nFHL3bvUJDQJgyB1ro1m-biV6ZV4JnpA3MNDc4Pc-tTegfY7D3ttuF5Sx1mR2bi9U=w800" alt="Estudiantes jugando al ajedrez en mesa del club" loading="lazy">
+          <div class="activity-caption">Aprendemos jugando</div>
+        </div>
+        <div class="activity-card reveal">
+          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDJM11B071p6YC9uAgb9aIymb4LkEDRlWYMDgn8nUGJznHzzfeUB7mn2QYxF18orKeUKqR60jqWKI-LH2genhmv9p-zhW637CcEEalQV3ydg_-vbGNcT6Xd3Dm6mmUVq-s6oaz6bn3RFqbjzoC99Iqk8lJ644kUtwP5FVjpyVrrCVkLkeX5C0ezfWeruGZqK9dVS0vT4Qpx7w_yFc_Fz2EMpr1X89nuZ2768CoO=w800" alt="Estudiantes concentrados durante una partida" loading="lazy">
+          <div class="activity-caption">Concentración y estrategia</div>
+        </div>
+        <div class="activity-card reveal">
+          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUD6VoZzlnyMPi-TmvNeJA7wJVavVgNd5H8eSsqybRXf93xelrLBCtC45MmL-vRQqRExDNLudlvKlvsIal1yZ1kDsTQtpMcw5c_V6__w3O4qtjgQMN-L4CEgJ_9uOs__2_-gCs2c7ODO_kyjgu6X5wvybv9meCCV2FikFkwF_hVy85ORiuWbIYMYJgvh1RunBZ-jw6YwLcS8qesJ0L1V-vLsxvIYivxMeqQt0pMpzUA=w800" alt="Tablero de ajedrez en pleno juego, dama por dama" loading="lazy">
+          <div class="activity-caption">¡Dama por dama!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="torneos" class="section-dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">Torneos</span>
+        <h2>Torneo de nivelación 2025</h2>
+        <p>Jugamos con sistema suizo: cada jugador se enfrenta a rivales de nivel similar según sus resultados, sin necesidad de cruzarse con todo el club para definir su categoría.</p>
+      </div>
+      <div class="activity-grid" style="grid-template-columns: 1fr;">
+        <div class="activity-card reveal" style="aspect-ratio: 16/9;">
+          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBUUPyIA9YkyIiPt4LBlG4DBqinC_u9jbICebmJSO-7MT-IKBbEAFaDf9-GvOI7xpLfzkOpHsHV_ThTspKdmP6DpEtQpIzlVznalx8RVOxqmnOHrhkMSgCaDHC04EZVtk2Qehk2zGCfcliMprJn7I0CdmCBu1yHqDX-qrvSLytfZ33lXkG1mVUMJKar14Vx04dgznrE7RtpGdswV3FUu1c9pjygx42k0eqElIB1=w1280" alt="Tabla de clasificación del torneo de nivelación, primer y segundo año" loading="lazy">
+          <div class="activity-caption">Clasificación · 1º y 2º año</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aprender">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">Aprender</span>
+        <h2>¿Nunca jugaste? Arrancás de cero, sin problema</h2>
+        <p>El profesor Hugo Ojeda enseña desde los movimientos más básicos. No necesitás saber nada para sumarte.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="step-num">01</span>
+          <h3>Inscribite</h3>
+          <p>Completá el formulario de inscripción. Tarda menos de dos minutos y no necesitás experiencia previa.</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-num">02</span>
+          <h3>Vení a tu primera clase</h3>
+          <p>Miércoles o viernes de 17:50 a 19:00. El profesor te ubica según lo que ya sepas, aunque sea nada.</p>
+        </div>
+        <div class="step reveal">
+          <span class="step-num">03</span>
+          <h3>Jugá en los recreos</h3>
+          <p>Practicá todos los días con compañeros del club. Cuanto más jugás, más rápido mejorás.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-block">
+    <div class="container">
+      <blockquote class="reveal">
+        "De pocas partidas he aprendido tanto como de la mayoría de mis derrotas."
+        <cite>José Raúl Capablanca</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section id="inscripcion" class="section-dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">Inscripción</span>
+        <h2>Tu primera partida puede ser hoy</h2>
+        <p>Elegí el formulario que te corresponde. Sumate al club, sin importar si nunca tocaste un tablero o si ya jugás hace años.</p>
+      </div>
+
+      <div class="form-tabs reveal" role="tablist" aria-label="Tipo de inscripción">
+        <button type="button" class="form-tab is-active" id="tabNuevos" role="tab" aria-selected="true" aria-controls="panelNuevos">Nunca jugué</button>
+        <button type="button" class="form-tab" id="tabExperiencia" role="tab" aria-selected="false" aria-controls="panelExperiencia">Ya juego / tengo experiencia</button>
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-card reveal" id="panelNuevos" role="tabpanel" aria-labelledby="tabNuevos">
+          <span class="form-card-tag">Sin experiencia</span>
+          <h3>Inscripción para nuevos</h3>
+          <p class="form-card-sub">No necesitás saber nada. El profesor te ubica desde cero.</p>
+
+          <form action="https://formspree.io/f/TU_ENDPOINT_NUEVOS" method="POST" class="club-form">
+            <input type="hidden" name="tipo_inscripcion" value="Nuevo / sin experiencia">
+
+            <label for="n-nombre">Nombre y apellido</label>
+            <input type="text" id="n-nombre" name="nombre" placeholder="Nombre y apellido" required>
+
+            <label for="n-curso">Curso y división</label>
+            <input type="text" id="n-curso" name="curso" placeholder="Ej: 2º 3ª" required>
+
+            <label for="n-contacto">Mail o teléfono de contacto</label>
+            <input type="text" id="n-contacto" name="contacto" placeholder="Mail o WhatsApp" required>
+
+            <label for="n-comentario">¿Algo que quieras contarnos? (opcional)</label>
+            <textarea id="n-comentario" name="comentario" placeholder="Por ejemplo, días en los que no podés venir" rows="3"></textarea>
+
+            <button type="submit" class="btn btn-gold">Inscribirme como nuevo</button>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="form-card reveal" id="panelExperiencia" role="tabpanel" aria-labelledby="tabExperiencia" hidden>
+          <span class="form-card-tag">Con experiencia</span>
+          <h3>Inscripción para jugadores con experiencia</h3>
+          <p class="form-card-sub">Contanos tu nivel para ubicarte en la categoría correcta del torneo.</p>
+
+          <form action="https://formspree.io/f/TU_ENDPOINT_EXPERIENCIA" method="POST" class="club-form">
+            <input type="hidden" name="tipo_inscripcion" value="Con experiencia">
+
+            <label for="e-nombre">Nombre y apellido</label>
+            <input type="text" id="e-nombre" name="nombre" placeholder="Nombre y apellido" required>
+
+            <label for="e-curso">Curso y división</label>
+            <input type="text" id="e-curso" name="curso" placeholder="Ej: 4º 1ª" required>
+
+            <label for="e-contacto">Mail o teléfono de contacto</label>
+            <input type="text" id="e-contacto" name="contacto" placeholder="Mail o WhatsApp" required>
+
+            <label for="e-nivel">Nivel o rating aproximado (si lo sabés)</label>
+            <input type="text" id="e-nivel" name="nivel" placeholder="Ej: club, federado, no sé mi rating">
+
+            <label for="e-torneos">¿Jugaste torneos antes? ¿Cuáles?</label>
+            <textarea id="e-torneos" name="torneos" placeholder="Contanos brevemente tu experiencia previa" rows="3"></textarea>
+
+            <button type="submit" class="btn btn-gold">Inscribirme con mi experiencia</button>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="goldGradFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A8821E"/>
+              <stop offset="50%" stop-color="#F0D670"/>
+              <stop offset="100%" stop-color="#A8821E"/>
+            </linearGradient>
+          </defs>
+          <path d="M6 21h12M7 21v-3.5h10V21M6.5 17.5l1-7h9l1 7M8 10.5V7h1.5V5h1V7h1V5h1V7h1V5h1V7H16v3.5" stroke="url(#goldGradFooter)" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+        La Torre Oscura
+      </div>
+      <nav class="footer-links">
+        <a href="#club">El club</a>
+        <a href="#torneos">Torneos</a>
+        <a href="#aprender">Aprender</a>
+        <a href="reglamento.html">Reglamento</a>
+        <a href="cuentos.html">Cuentos</a>
+        <a href="#inscripcion">Inscribirme</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>Club de ajedrez · Colegio Secundario Manuel Belgrano</span>
+      <span>Ciclo 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

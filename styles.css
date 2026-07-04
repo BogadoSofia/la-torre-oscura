@@ -1,0 +1,1146 @@
+/* ====================================
+   LA TORRE OSCURA — Club de Ajedrez
+   Sistema de diseño
+   ==================================== */
+
+:root {
+  --bg-dark: #0A0E1A;
+  --bg-dark-card: #0F1424;
+  --border-dark: #1E2438;
+  --white: #FFFFFF;
+  --off-white: #F7F7F5;
+  --gold: #C9A227;
+  --gold-light: #E0C158;
+  --gold-metal: linear-gradient(100deg, #A8821E 0%, #D9B53A 24%, #F0D670 50%, #D9B53A 76%, #A8821E 100%);
+  --gold-metal-dark: #A8821E;
+  --gold-metal-bright: #F0D670;
+  --gray-text: #6B7280;
+  --gray-text-dark: #9CA3AF;
+  --text-dark: #11141F;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --max-width: 1180px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ====================================
+   HEADER
+   ==================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 19px;
+  letter-spacing: 0.02em;
+}
+
+.brand svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  margin: 5px 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.main-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.main-nav a {
+  color: var(--gray-text-dark);
+  font-size: 14.5px;
+  font-weight: 500;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--white);
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--gold-metal);
+  background-size: 200% 100%;
+}
+
+.main-nav a.nav-cta {
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  padding: 7px 16px;
+  color: var(--white);
+  transition: border-color 0.2s ease;
+}
+
+.main-nav a.nav-cta:hover {
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+/* ====================================
+   HERO
+   ==================================== */
+
+.hero {
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: repeating-conic-gradient(
+    rgba(255,255,255,0.028) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 60px 60px;
+  color: var(--white);
+  overflow: hidden;
+  padding: 100px 0 90px;
+}
+
+.hero-chess {
+  position: absolute;
+  top: 50%;
+  right: 3%;
+  transform: translateY(-50%);
+  width: 420px;
+  height: 420px;
+  pointer-events: none;
+}
+
+.chess-board-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45));
+}
+
+.sq-light {
+  fill: #E8E4D9;
+}
+
+.sq-dark {
+  fill: #2A3148;
+}
+
+/* Torre dorada */
+.rook-gold {
+  fill: #D9B53A;
+  animation: goldCapture 12s ease-in-out infinite;
+}
+
+.rook-gold path {
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55));
+}
+
+/* Torre negra */
+.rook-black {
+  fill: #B8C5D1;
+  animation: blackCapture 12s ease-in-out infinite;
+}
+
+.rook-black path {
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.65));
+}
+
+/*
+  Secuencia (12s loop):
+  0-8%   → Dorada en col 0, Negra en col 2 (ambas estáticas)
+  8-33%  → Dorada se mueve hacia la negra (col 0→2)
+  33%    → Captura: negra desaparece
+  35-40% → Negra reaparece en col 0
+  40-65% → Negra se mueve hacia la dorada (col 0→2)
+  65-66% → Captura: dorada desaparece
+  67-69% → Dorada reaparece en col 0
+  69-100%→ Reset: dorada en col 0, negra en col 2 → loop
+*/
+@keyframes goldCapture {
+  0%, 8%     { transform: translateX(0);      opacity: 1; }
+  33%        { transform: translateX(180px);  opacity: 1; }
+  65%        { transform: translateX(180px);  opacity: 1; }
+  66%        { transform: translateX(180px);  opacity: 0; }
+  67%        { transform: translateX(0);      opacity: 0; }
+  69%, 100%  { transform: translateX(0);      opacity: 1; }
+}
+
+@keyframes blackCapture {
+  0%, 33%    { transform: translateX(180px);  opacity: 1; }
+  34%        { transform: translateX(180px);  opacity: 0; }
+  35%        { transform: translateX(0);      opacity: 0; }
+  40%        { transform: translateX(0);      opacity: 1; }
+  65%        { transform: translateX(180px);  opacity: 1; }
+  100%       { transform: translateX(180px);  opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rook-gold,
+  .rook-black {
+    animation: none;
+  }
+  .rook-black {
+    transform: translateX(180px);
+  }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--gray-text-dark);
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: 40px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--gray-text-dark);
+}
+
+.hero-meta strong {
+  color: var(--white);
+  font-weight: 500;
+  display: block;
+  font-size: 12px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: var(--gold-metal);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  color: #2A1F05;
+  transition: transform 0.15s ease, background-position 0.4s ease;
+}
+
+.btn-gold:hover {
+  background-position: 100% 0;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border-color: var(--border-dark);
+  color: var(--white);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+}
+
+.btn-outline-dark {
+  border-color: #D9D9D6;
+  color: var(--text-dark);
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--gold);
+}
+
+/* ====================================
+   FRANJA HORARIOS
+   ==================================== */
+
+.schedule-strip {
+  background: var(--off-white);
+  border-bottom: 1px solid #E5E3DC;
+  padding: 28px 0;
+}
+
+.schedule-strip .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.schedule-item .label {
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-text);
+  font-weight: 600;
+}
+
+.schedule-item .value {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  color: var(--text-dark);
+}
+
+/* ====================================
+   SECCIONES GENERALES
+   ==================================== */
+
+section {
+  padding: 88px 0;
+}
+
+.section-head {
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--text-dark);
+}
+
+.section-head p {
+  color: var(--gray-text);
+  font-size: 16px;
+}
+
+.section-dark {
+  background: var(--bg-dark);
+  color: var(--white);
+}
+
+.section-dark .section-head h2 {
+  color: var(--white);
+}
+
+.section-dark .section-head p {
+  color: var(--gray-text-dark);
+}
+
+/* ====================================
+   GRID ACTIVIDADES
+   ==================================== */
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.activity-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: var(--off-white);
+}
+
+.activity-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.activity-card:hover img {
+  transform: scale(1.04);
+}
+
+.activity-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 18px 16px;
+  background: linear-gradient(to top, rgba(10,14,26,0.85), transparent);
+  color: var(--white);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+/* ====================================
+   PASOS / CÓMO SUMARTE
+   ==================================== */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+
+.step {
+  border-top: 2px solid var(--border-dark);
+  padding-top: 22px;
+}
+
+.step .step-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.step h3 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 14.5px;
+  color: var(--gray-text-dark);
+}
+
+/* ====================================
+   CITA
+   ==================================== */
+
+.quote-block {
+  background: var(--off-white);
+  text-align: center;
+}
+
+.quote-block blockquote {
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--text-dark);
+}
+
+.quote-block cite {
+  display: block;
+  margin-top: 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-text);
+}
+
+/* ====================================
+   CTA FINAL
+   ==================================== */
+
+.final-cta {
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.final-cta p {
+  color: var(--gray-text-dark);
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+
+.final-cta .hero-actions {
+  justify-content: center;
+}
+
+/* ====================================
+   FOOTER
+   ==================================== */
+
+.site-footer {
+  background: var(--bg-dark-card);
+  border-top: 1px solid var(--border-dark);
+  color: var(--gray-text-dark);
+  padding: 48px 0 28px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 16px;
+}
+
+.footer-brand svg {
+  width: 22px;
+  height: 22px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 13.5px;
+  color: var(--gray-text-dark);
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border-dark);
+  padding-top: 22px;
+  font-size: 12.5px;
+  color: var(--gray-text);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ====================================
+   ANIMACIONES DE ENTRADA
+   ==================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ====================================
+   FORMULARIOS DE INSCRIPCIÓN
+   ==================================== */
+
+.form-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  padding: 4px;
+  margin-bottom: 40px;
+}
+
+.form-tab {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-text-dark);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.form-tab:hover {
+  color: var(--white);
+}
+
+.form-tab.is-active {
+  background: var(--border-dark);
+  color: var(--white);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.form-card {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.form-card[hidden] {
+  display: none;
+}
+
+.form-card-tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.form-card h3 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.form-card-sub {
+  font-size: 14px;
+  color: var(--gray-text-dark);
+  margin-bottom: 24px;
+}
+
+.club-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.club-form label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--gray-text-dark);
+  margin-bottom: -8px;
+}
+
+.club-form input,
+.club-form textarea {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--white);
+  background: var(--bg-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  padding: 11px 14px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.club-form input::placeholder,
+.club-form textarea::placeholder {
+  color: var(--gray-text);
+}
+
+.club-form input:focus,
+.club-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.club-form textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.club-form .btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.form-status {
+  font-size: 13.5px;
+  min-height: 18px;
+  text-align: center;
+}
+
+.form-status.success {
+  color: #6FCF97;
+}
+
+.form-status.error {
+  color: #E06666;
+}
+
+/* ====================================
+   RESPONSIVE
+   ==================================== */
+
+@media (max-width: 1180px) {
+  .hero-chess {
+    width: 360px;
+    height: 360px;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 880px) {
+  .activity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-chess {
+    width: 310px;
+    height: 310px;
+    right: 1%;
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-chess {
+    display: none;
+  }
+  .nav-toggle {
+    display: block;
+  }
+  .main-nav {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-dark);
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 24px 16px;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .main-nav.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .main-nav a {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-dark);
+    width: 100%;
+    font-size: 15px;
+  }
+  .main-nav a.active::after {
+    display: none;
+  }
+  /* nav-cta sin borde-botón dentro del menú móvil */
+  .main-nav a.nav-cta {
+    border: none;
+    border-bottom: 1px solid var(--border-dark);
+    border-radius: 0;
+    padding: 13px 0;
+    color: var(--gray-text-dark);
+  }
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Tarjetas menos altas en columna única */
+  .activity-card {
+    aspect-ratio: 3/2;
+  }
+  .schedule-strip .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  /* TOC de reglamento: scroll horizontal en lugar de columna */
+  .toc-strip .container {
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0;
+    padding-bottom: 2px;
+  }
+  .toc-strip .container::-webkit-scrollbar {
+    display: none;
+  }
+  .toc-strip .toc-nav {
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+  section {
+    padding: 56px 0;
+  }
+  .hero {
+    padding: 56px 0 48px;
+  }
+  .hero-sub {
+    font-size: 15px;
+  }
+  .section-head {
+    margin-bottom: 40px;
+  }
+  /* iOS Safari: evitar auto-zoom al enfocar inputs */
+  .club-form input,
+  .club-form textarea {
+    font-size: 16px;
+  }
+  .form-card {
+    padding: 20px;
+  }
+  .page-hero {
+    padding: 48px 0 40px;
+  }
+}
+
+/* ====================================
+   REGLAMENTO
+   ==================================== */
+
+.section-light {
+  background: var(--off-white);
+}
+
+.page-hero {
+  background: var(--bg-dark);
+  color: var(--white);
+  padding: 72px 0 64px;
+}
+
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5.5vw, 58px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+.page-hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.page-hero p {
+  font-size: 16px;
+  color: var(--gray-text-dark);
+  max-width: 520px;
+}
+
+.toc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  align-items: center;
+}
+
+.toc-nav a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gray-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.toc-nav a:hover {
+  color: var(--gold);
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.8vw, 27px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+}
+
+.section-dark .chapter h2 {
+  color: var(--white);
+}
+
+.chapter-intro {
+  font-size: 15px;
+  color: var(--gray-text);
+  margin-bottom: 24px;
+  line-height: 1.65;
+}
+
+.section-dark .chapter-intro {
+  color: var(--gray-text-dark);
+}
+
+.rule-list {
+  list-style: none;
+}
+
+.rule-list li {
+  position: relative;
+  padding: 14px 0 14px 22px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  border-bottom: 1px solid #E0DDD5;
+}
+
+.rule-list li:first-child {
+  border-top: 1px solid #E0DDD5;
+}
+
+.rule-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.section-dark .rule-list li {
+  color: var(--gray-text-dark);
+  border-color: var(--border-dark);
+}
+
+.section-dark .rule-list li strong {
+  color: var(--gold-light);
+}
+
+[id^="art"] {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 880px) {
+  .chapter-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* Scroll offset para el header sticky en index.html */
+#club, #torneos, #aprender, #inscripcion {
+  scroll-margin-top: 72px;
+}
+
+/* ====================================
+   TELÉFONOS PEQUEÑOS (≤ 480px)
+   ==================================== */
+
+@media (max-width: 480px) {
+  .header-inner {
+    padding: 14px 20px;
+  }
+  /* Botones del hero en columna, ancho completo */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn {
+    text-align: center;
+  }
+  /* Hero meta: ítems en columna */
+  .hero-meta {
+    flex-direction: column;
+    gap: 14px;
+  }
+  /* Tabs del formulario: llenan el ancho disponible */
+  .form-tabs {
+    display: flex;
+    width: 100%;
+  }
+  .form-tab {
+    flex: 1;
+    font-size: 13px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  section {
+    padding: 48px 0;
+  }
+  .hero {
+    padding: 44px 0 40px;
+  }
+  .page-hero {
+    padding: 40px 0 32px;
+  }
+  .form-card {
+    padding: 16px;
+  }
+}
