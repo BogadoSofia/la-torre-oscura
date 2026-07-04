@@ -127,7 +127,18 @@ button:focus-visible {
   height: 2px;
   background: var(--white);
   margin: 5px 0;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.nav-toggle.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-toggle.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .main-nav {
@@ -360,6 +371,7 @@ button:focus-visible {
   padding: 14px 26px;
   border-radius: 4px;
   cursor: pointer;
+  touch-action: manipulation;
   transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
   border: 1px solid transparent;
 }
@@ -843,10 +855,26 @@ section {
   }
 }
 
-@media (max-width: 880px) {
+/* ====================================
+   TABLET (≤ 1024px)
+   ==================================== */
+
+@media (max-width: 1024px) {
+  .hero-chess {
+    display: none;
+  }
+  section {
+    padding: 72px 0;
+  }
+  .hero {
+    padding: 72px 0 60px;
+  }
   .activity-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 880px) {
   .steps {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -854,18 +882,9 @@ section {
   .form-grid {
     grid-template-columns: 1fr;
   }
-  .hero-chess {
-    width: 310px;
-    height: 310px;
-    right: 1%;
-    opacity: 0.55;
-  }
 }
 
 @media (max-width: 720px) {
-  .hero-chess {
-    display: none;
-  }
   .nav-toggle {
     display: block;
   }
@@ -1008,6 +1027,7 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
+  padding: 6px 0;
   transition: color 0.2s ease;
 }
 
@@ -1107,6 +1127,9 @@ section {
   .header-inner {
     padding: 14px 20px;
   }
+  .container {
+    padding: 0 20px;
+  }
   /* Botones del hero en columna, ancho completo */
   .hero-actions {
     flex-direction: column;
@@ -1131,6 +1154,13 @@ section {
     padding: 10px 8px;
     text-align: center;
   }
+  /* Activity grid: columna única */
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+  .activity-card {
+    aspect-ratio: 3/2;
+  }
   section {
     padding: 48px 0;
   }
@@ -1142,5 +1172,13 @@ section {
   }
   .form-card {
     padding: 16px;
+  }
+  /* Footer links más compactos */
+  .footer-links {
+    gap: 12px 20px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 4px;
   }
 }

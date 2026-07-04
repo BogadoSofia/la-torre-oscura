@@ -60,14 +60,18 @@ const mainNav = document.getElementById('mainNav');
 if (navToggle && mainNav) {
   navToggle.addEventListener('click', () => {
     const isOpen = mainNav.classList.toggle('is-open');
+    navToggle.classList.toggle('is-open', isOpen);
     navToggle.setAttribute('aria-expanded', String(isOpen));
   });
 
+  function closeNav() {
+    mainNav.classList.remove('is-open');
+    navToggle.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
   mainNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
+    link.addEventListener('click', closeNav);
   });
 
   // Cerrar menú al tocar fuera en móvil
@@ -75,8 +79,7 @@ if (navToggle && mainNav) {
     if (mainNav.classList.contains('is-open') &&
         !mainNav.contains(e.target) &&
         !navToggle.contains(e.target)) {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
+      closeNav();
     }
   });
 }
