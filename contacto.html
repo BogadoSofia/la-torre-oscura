@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -59,11 +60,14 @@
           <h3>Mandanos tu pregunta</h3>
           <p class="form-card-sub">Cualquier duda sobre inscripción, horarios o actividades, con gusto te ayudamos.</p>
 
-          <form action="https://formspree.io/bogadosofia470@gmail.com" method="POST" class="club-form">
+          <form action="https://formspree.io/f/xqevnzvw" method="POST" class="club-form" data-success="Tu consulta fue enviada. Te respondemos a la brevedad.">
             <input type="hidden" name="origen" value="Formulario de contacto">
 
             <label for="c-nombre">Nombre y apellido</label>
             <input type="text" id="c-nombre" name="nombre" placeholder="Tu nombre" required>
+
+            <label for="c-contacto">Número de teléfono o email</label>
+            <input type="text" id="c-contacto" name="contacto" placeholder="Tu WhatsApp o mail" required>
 
             <label for="c-consulta">Tu consulta</label>
             <textarea id="c-consulta" name="consulta" placeholder="Escribí tu pregunta o comentario..." rows="5" required></textarea>
@@ -128,7 +132,7 @@
       </nav>
     </div>
     <div class="footer-bottom">
-      <span>Club de ajedrez · Colegio Secundario Manuel Belgrano</span>
+      <span>Club de ajedrez · Colegio Secundario Manuel Belgrano - Hecho por Bogado Sofia de 1° 5°</span>
       <span>Ciclo Lectivo 2026</span>
     </div>
   </div>

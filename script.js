@@ -37,7 +37,7 @@ document.querySelectorAll('.club-form').forEach(form => {
       });
 
       if (response.ok) {
-        statusEl.textContent = 'Listo, recibimos tu inscripción. Nos vemos en el club.';
+        statusEl.textContent = form.dataset.success || 'Listo, recibimos tu inscripción. Nos vemos en el club.';
         statusEl.className = 'form-status success';
         form.reset();
       } else {

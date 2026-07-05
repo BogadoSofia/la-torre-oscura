@@ -262,7 +262,6 @@ button:focus-visible {
 }
 
 .hero-meta strong {
-  color: var(--white);
   font-weight: 500;
   display: block;
   font-size: 12px;
@@ -491,7 +490,7 @@ section {
 
 .step p {
   font-size: 14.5px;
-  color: var(--gray-text-dark);
+  color: var(--gray-text);
 }
 
 /* ====================================
@@ -662,7 +661,7 @@ section {
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 28px;
 }
 
@@ -1023,7 +1022,7 @@ section {
 }
 
 /* Scroll offset para el header sticky en index.html */
-#club, #torneos, #aprender, #inscripcion {
+#club, #aprender, #inscripcion, #integrantes {
   scroll-margin-top: 72px;
 }
 
@@ -1210,4 +1209,49 @@ section {
     font-size: 13px;
     padding: 12px 16px;
   }
+}
+
+/* ====================================
+   Integrantes del club
+   ==================================== */
+
+.members-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 48px;
+}
+
+.member-item {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--white);
+  line-height: 1.4;
+}
+
+.member-item .member-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 1024px) {
+  .members-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .members-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .members-grid { gap: 8px; }
+  .member-item { padding: 12px 14px; }
 }
