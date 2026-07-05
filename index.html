@@ -7,7 +7,7 @@
 <meta name="description" content="Club de ajedrez del Colegio Secundario Manuel Belgrano. Clases para principiantes, torneos internos y actividad libre en los recreos. Sumate los miércoles y viernes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -48,7 +48,7 @@
     <div class="container hero-inner">
       <span class="hero-eyebrow">Ciclo 2026 · Inscripción abierta</span>
       <h1>Pensá cada<br>movimiento. <em>Dominá el juego.</em></h1>
-      <p class="hero-sub">El club de ajedrez del Manuel Belgrano. Clases para quienes recién empiezan, torneos internos por nivel y un lugar para jugar todos los días en el recreo.</p>
+      <p class="hero-sub">El club de ajedrez del Colegio Manuel Belgrano. Clases para quienes recién empiezan, torneos internos segun tu experiencia.</p>
       <div class="hero-meta">
         <div>
           <strong>Días</strong>
@@ -92,20 +92,39 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">El club</span>
         <h2>Así se juega en La Torre Oscura</h2>
-        <p>Entre partidas y aperturas, también hay lugar para equivocarse, volver a empezar y mejorar jugada a jugada.</p>
+        <p>También hay lugar para equivocarse, volver a empezar y mejorar jugada a jugada.</p>
       </div>
-      <div class="activity-grid">
-        <div class="activity-card reveal">
-          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUD7stHBsVBfg4dVhMm0924MUVT6jmYbmJVuQBzkrGSXJTZthwX88XPli39H2AMrYpMquLHHXe3gohO-cs7LDyqPPeqWwrOY0qkaGUuf2HmW25X5nNiXUbsM7WizA3-nCQ0cVgLo6J_Uvn0A8ttkNWzX78Yoa6QckCyIqT_nFHL3bvUJDQJgyB1ro1m-biV6ZV4JnpA3MNDc4Pc-tTegfY7D3ttuF5Sx1mR2bi9U=w800" alt="Estudiantes jugando al ajedrez en mesa del club" loading="lazy">
-          <div class="activity-caption">Aprendemos jugando</div>
+      <div class="carousel reveal" id="clubCarousel" aria-label="Fotos del club">
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <img src="foto1.jpg" alt="Estudiantes jugando al ajedrez en el aula" loading="lazy">
+            <div class="activity-caption">Clase en el aula</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="foto2.jpg" alt="Alumnos del club en el pasillo del colegio" loading="lazy">
+            <div class="activity-caption">Ajedrez en el recreo</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="foto3.jpg" alt="Vista desde arriba de partidas en el pasillo" loading="lazy">
+            <div class="activity-caption">Partidas en el pasillo</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="foto4.jpg" alt="Alumnos jugando al ajedrez sentados en el piso" loading="lazy">
+            <div class="activity-caption">Jugando en todos lados</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="foto5.jpg" alt="Torneo de ajedrez en el salón del colegio" loading="lazy">
+            <div class="activity-caption">Torneo en el salón</div>
+          </div>
         </div>
-        <div class="activity-card reveal">
-          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDJM11B071p6YC9uAgb9aIymb4LkEDRlWYMDgn8nUGJznHzzfeUB7mn2QYxF18orKeUKqR60jqWKI-LH2genhmv9p-zhW637CcEEalQV3ydg_-vbGNcT6Xd3Dm6mmUVq-s6oaz6bn3RFqbjzoC99Iqk8lJ644kUtwP5FVjpyVrrCVkLkeX5C0ezfWeruGZqK9dVS0vT4Qpx7w_yFc_Fz2EMpr1X89nuZ2768CoO=w800" alt="Estudiantes concentrados durante una partida" loading="lazy">
-          <div class="activity-caption">Concentración y estrategia</div>
-        </div>
-        <div class="activity-card reveal">
-          <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUD6VoZzlnyMPi-TmvNeJA7wJVavVgNd5H8eSsqybRXf93xelrLBCtC45MmL-vRQqRExDNLudlvKlvsIal1yZ1kDsTQtpMcw5c_V6__w3O4qtjgQMN-L4CEgJ_9uOs__2_-gCs2c7ODO_kyjgu6X5wvybv9meCCV2FikFkwF_hVy85ORiuWbIYMYJgvh1RunBZ-jw6YwLcS8qesJ0L1V-vLsxvIYivxMeqQt0pMpzUA=w800" alt="Tablero de ajedrez en pleno juego, dama por dama" loading="lazy">
-          <div class="activity-caption">¡Dama por dama!</div>
+        <button class="carousel-btn carousel-prev" aria-label="Foto anterior">&#8249;</button>
+        <button class="carousel-btn carousel-next" aria-label="Foto siguiente">&#8250;</button>
+        <div class="carousel-dots" role="tablist" aria-label="Seleccionar foto">
+          <button class="carousel-dot is-active" role="tab" aria-label="Foto 1"></button>
+          <button class="carousel-dot" role="tab" aria-label="Foto 2"></button>
+          <button class="carousel-dot" role="tab" aria-label="Foto 3"></button>
+          <button class="carousel-dot" role="tab" aria-label="Foto 4"></button>
+          <button class="carousel-dot" role="tab" aria-label="Foto 5"></button>
         </div>
       </div>
     </div>
@@ -115,7 +134,7 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="section-eyebrow">Integrantes</span>
-        <h2>Los que mueven las piezas</h2>
+        <h2>Los integrantes del club</h2>
       </div>
       <ul class="members-grid">
         <li class="member-item reveal"><span class="member-num">01</span>Nombre de integrante</li>
@@ -158,15 +177,15 @@
         <div class="step reveal">
           <span class="step-num">02</span>
           <h3>Vení a tu primera clase</h3>
-          <p>Miércoles o viernes de 17:50 a 19:00. El profesor te ubica según lo que ya sepas, aunque sea nada.</p>
+          <p>Miércoles o viernes de 17:50 a 19:00. El profesor te enseña según tu experiencia.</p>
         </div>
         <div class="step reveal">
           <span class="step-num">03</span>
           <h3>Jugá en los recreos</h3>
-          <p>Practicá todos los días con compañeros del club. Cuanto más jugás, más rápido mejorás.</p>
+          <p>Practicá todos los días con compañeros del club en la biblioteca. Cuanto más jugás, más rápido mejorás.</p>
         </div>
       </div>
-      <div style="text-align:center;margin-top:48px">
+      <div class="section-cta">
         <a href="#inscripcion" class="btn btn-gold">Quiero inscribirme como nuevo</a>
       </div>
     </div>
@@ -186,7 +205,7 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">Inscripción</span>
         <h2>Tu primera partida puede ser hoy</h2>
-        <p>Elegí el formulario que te corresponde. Sumate al club, sin importar si nunca tocaste un tablero o si ya jugás hace años.</p>
+        <p>Elegí el formulario que te corresponde. Sumate al club, sin importar si no tenes experiencia o si ya jugás hace años.</p>
       </div>
 
       <div class="form-tabs reveal" role="tablist" aria-label="Tipo de inscripción">
@@ -293,3 +312,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+

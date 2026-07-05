@@ -196,6 +196,7 @@ button:focus-visible {
     transparent 0% 50%
   );
   background-size: 60px 60px;
+  background-attachment: fixed;
   color: var(--white);
   overflow: hidden;
   padding: 100px 0 90px;
@@ -228,6 +229,7 @@ button:focus-visible {
   background: var(--gold);
   border-radius: 50%;
   display: inline-block;
+  animation: dotPulse 2.8s ease-in-out infinite;
 }
 
 .hero h1 {
@@ -278,6 +280,26 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+/* ====================================
+   ANIMACIONES DE ENTRADA DEL HERO
+   ==================================== */
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero-eyebrow { animation: heroFadeUp 0.65s ease both; }
+.hero h1      { animation: heroFadeUp 0.65s ease 0.12s both; }
+.hero-sub     { animation: heroFadeUp 0.65s ease 0.22s both; }
+.hero-meta    { animation: heroFadeUp 0.65s ease 0.32s both; }
+.hero-actions { animation: heroFadeUp 0.65s ease 0.42s both; }
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -320,14 +342,6 @@ button:focus-visible {
   border-color: var(--gold);
 }
 
-.btn-outline-dark {
-  border-color: #D9D9D6;
-  color: var(--text-dark);
-}
-
-.btn-outline-dark:hover {
-  border-color: var(--gold);
-}
 
 /* ====================================
    FRANJA HORARIOS
@@ -459,6 +473,112 @@ section {
 }
 
 /* ====================================
+   CARRUSEL DE FOTOS
+   ==================================== */
+
+.carousel {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: var(--bg-dark-card);
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel .activity-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 18px 16px;
+  background: linear-gradient(to top, rgba(10,14,26,0.85), transparent);
+  color: var(--white);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10,14,26,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: rgba(10,14,26,0.85);
+}
+
+.carousel-prev { left: 14px; }
+.carousel-next { right: 14px; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dot.is-active {
+  background: var(--gold);
+  transform: scale(1.3);
+}
+
+@media (max-width: 720px) {
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+}
+
+/* ====================================
    PASOS / CÓMO SUMARTE
    ==================================== */
 
@@ -523,30 +643,6 @@ section {
   color: var(--gray-text);
 }
 
-/* ====================================
-   CTA FINAL
-   ==================================== */
-
-.final-cta {
-  text-align: center;
-}
-
-.final-cta h2 {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 40px);
-  margin-bottom: 16px;
-  color: var(--white);
-}
-
-.final-cta p {
-  color: var(--gray-text-dark);
-  max-width: 480px;
-  margin: 0 auto 32px;
-}
-
-.final-cta .hero-actions {
-  justify-content: center;
-}
 
 /* ====================================
    FOOTER
@@ -792,6 +888,10 @@ section {
 }
 
 @media (max-width: 720px) {
+  /* iOS Safari no soporta background-attachment: fixed */
+  .hero {
+    background-attachment: scroll;
+  }
   .nav-toggle {
     display: block;
   }
@@ -1088,6 +1188,14 @@ section {
     flex-direction: column;
     gap: 4px;
   }
+  .float-contact {
+    bottom: 20px;
+    right: 20px;
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+  .members-grid { gap: 8px; }
+  .member-item { padding: 12px 14px; }
 }
 
 /* ====================================
@@ -1202,14 +1310,6 @@ section {
   }
 }
 
-@media (max-width: 480px) {
-  .float-contact {
-    bottom: 20px;
-    right: 20px;
-    font-size: 13px;
-    padding: 12px 16px;
-  }
-}
 
 /* ====================================
    Integrantes del club
@@ -1220,7 +1320,6 @@ section {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
-  margin-top: 48px;
 }
 
 .member-item {
@@ -1243,6 +1342,11 @@ section {
   letter-spacing: 0.04em;
 }
 
+.section-cta {
+  text-align: center;
+  margin-top: 48px;
+}
+
 @media (max-width: 1024px) {
   .members-grid { grid-template-columns: repeat(4, 1fr); }
 }
@@ -1251,7 +1355,3 @@ section {
   .members-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 480px) {
-  .members-grid { gap: 8px; }
-  .member-item { padding: 12px 14px; }
-}

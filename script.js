@@ -53,6 +53,45 @@ document.querySelectorAll('.club-form').forEach(form => {
   });
 });
 
+// Carrusel de fotos del club
+const carousel = document.getElementById('clubCarousel');
+if (carousel) {
+  const track    = carousel.querySelector('.carousel-track');
+  const slides   = carousel.querySelectorAll('.carousel-slide');
+  const dots     = carousel.querySelectorAll('.carousel-dot');
+  const prevBtn  = carousel.querySelector('.carousel-prev');
+  const nextBtn  = carousel.querySelector('.carousel-next');
+  let current = 0;
+  let timer;
+
+  function goTo(n) {
+    dots[current].classList.remove('is-active');
+    current = (n + slides.length) % slides.length;
+    dots[current].classList.add('is-active');
+    track.style.transform = `translateX(-${current * 100}%)`;
+  }
+
+  function startTimer() { timer = setInterval(() => goTo(current + 1), 4500); }
+  function stopTimer()  { clearInterval(timer); }
+
+  prevBtn.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
+  nextBtn.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); }));
+
+  carousel.addEventListener('mouseenter', stopTimer);
+  carousel.addEventListener('mouseleave', startTimer);
+
+  // Swipe táctil
+  let touchStartX = 0;
+  carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { stopTimer(); goTo(current + (diff > 0 ? 1 : -1)); startTimer(); }
+  });
+
+  startTimer();
+}
+
 // Menú móvil
 const navToggle = document.getElementById('navToggle');
 const mainNav = document.getElementById('mainNav');
