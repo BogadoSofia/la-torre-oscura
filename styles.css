@@ -1090,3 +1090,124 @@ section {
     gap: 4px;
   }
 }
+
+/* ====================================
+   BOTÓN FLOTANTE DE CONTACTO
+   ==================================== */
+
+.float-contact {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--gold-metal);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  color: #2A1F05;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  touch-action: manipulation;
+  transition: transform 0.15s ease, background-position 0.4s ease, box-shadow 0.2s ease;
+}
+
+.float-contact:hover {
+  transform: translateY(-2px);
+  background-position: 100% 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.float-contact svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+/* ====================================
+   PÁGINA DE CONTACTO
+   ==================================== */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact-info {
+  padding-top: 8px;
+}
+
+.contact-info-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-dark);
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-info-item:first-of-type {
+  border-top: 1px solid var(--border-dark);
+}
+
+.contact-info-item:hover {
+  color: var(--gold-light);
+}
+
+.contact-info-item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.contact-info-type {
+  display: block;
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-text-dark);
+  margin-bottom: 3px;
+}
+
+.contact-info-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (max-width: 880px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .float-contact {
+    bottom: 20px;
+    right: 20px;
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+}

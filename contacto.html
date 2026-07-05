@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto — La Torre Oscura | Club de Ajedrez Manuel Belgrano</title>
+<meta name="description" content="¿Tenés alguna duda sobre el Club de Ajedrez La Torre Oscura? Escribinos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="goldGradHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#A8821E"/>
+            <stop offset="50%" stop-color="#F0D670"/>
+            <stop offset="100%" stop-color="#A8821E"/>
+          </linearGradient>
+        </defs>
+        <path d="M3 22Q3 23.5 4.5 23.5L19.5 23.5Q21 23.5 21 22L21 20L19 20L19 18Q17.5 13.5 18.5 10L20 10L20 3L16 3L16 7L14 7L14 3L10 3L10 7L8 7L8 3L4 3L4 10L5.5 10Q6.5 13.5 5 18L5 20L3 20Z" fill="url(#goldGradHeader)"/>
+      </svg>
+      La Torre Oscura
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#club">El club</a>
+      <a href="index.html#aprender">Aprender</a>
+      <a href="reglamento.html">Reglamento</a>
+      <a href="contacto.html" class="active nav-cta">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="hero-eyebrow">Club de Ajedrez · Ciclo Lectivo 2026</span>
+      <h1>¿Tenés alguna<br><em>duda?</em></h1>
+      <p>Completá el formulario y te respondemos a la brevedad por mail o por WhatsApp.</p>
+    </div>
+  </section>
+
+  <section class="section-dark">
+    <div class="container">
+      <div class="contact-layout">
+
+        <div class="form-card reveal">
+          <span class="form-card-tag">Consultas</span>
+          <h3>Mandanos tu pregunta</h3>
+          <p class="form-card-sub">Cualquier duda sobre inscripción, horarios o actividades, con gusto te ayudamos.</p>
+
+          <form action="https://formspree.io/bogadosofia470@gmail.com" method="POST" class="club-form">
+            <input type="hidden" name="origen" value="Formulario de contacto">
+
+            <label for="c-nombre">Nombre y apellido</label>
+            <input type="text" id="c-nombre" name="nombre" placeholder="Tu nombre" required>
+
+            <label for="c-consulta">Tu consulta</label>
+            <textarea id="c-consulta" name="consulta" placeholder="Escribí tu pregunta o comentario..." rows="5" required></textarea>
+
+            <button type="submit" class="btn btn-gold">Enviar consulta</button>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="contact-info reveal">
+          <p class="contact-info-label">También podés encontrarnos en</p>
+
+          <a href="https://wa.me/543794555128" class="contact-info-item" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <span class="contact-info-type">WhatsApp</span>
+              <span class="contact-info-value">3794 555 128</span>
+            </div>
+          </a>
+
+          <a href="mailto:bogadosofia470@gmail.com" class="contact-info-item">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <span class="contact-info-type">Mail</span>
+              <span class="contact-info-value">bogadosofia470@gmail.com</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="goldGradFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A8821E"/>
+              <stop offset="50%" stop-color="#F0D670"/>
+              <stop offset="100%" stop-color="#A8821E"/>
+            </linearGradient>
+          </defs>
+          <path d="M3 22Q3 23.5 4.5 23.5L19.5 23.5Q21 23.5 21 22L21 20L19 20L19 18Q17.5 13.5 18.5 10L20 10L20 3L16 3L16 7L14 7L14 3L10 3L10 7L8 7L8 3L4 3L4 10L5.5 10Q6.5 13.5 5 18L5 20L3 20Z" fill="url(#goldGradFooter)"/>
+        </svg>
+        La Torre Oscura
+      </div>
+      <nav class="footer-links">
+        <a href="index.html#club">El club</a>
+        <a href="index.html#aprender">Aprender</a>
+        <a href="reglamento.html">Reglamento</a>
+        <a href="index.html#inscripcion">Inscribirme</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>Club de ajedrez · Colegio Secundario Manuel Belgrano</span>
+      <span>Ciclo Lectivo 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
