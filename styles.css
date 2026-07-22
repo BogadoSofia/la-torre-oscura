@@ -713,6 +713,16 @@ section {
   gap: 8px;
 }
 
+.footer-bottom a {
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-bottom a:hover {
+  color: var(--gold);
+}
+
 /* ====================================
    ANIMACIONES DE ENTRADA
    ==================================== */
