@@ -96,8 +96,13 @@ if (navToggle && mainNav) {
 const floatBtn = document.querySelector('.float-contact');
 if (floatBtn) {
   const toggle = () => {
-    const pastHero   = window.scrollY > window.innerHeight * 0.6;
-    const nearBottom = window.scrollY + window.innerHeight > document.body.scrollHeight - 120;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    if (maxScroll <= 0) {
+      floatBtn.classList.add('is-visible');
+      return;
+    }
+    const pastHero   = window.scrollY > Math.min(window.innerHeight * 0.6, maxScroll * 0.3);
+    const nearBottom = window.scrollY >= maxScroll - 24;
     floatBtn.classList.toggle('is-visible', pastHero && !nearBottom);
   };
   window.addEventListener('scroll', toggle, { passive: true });
