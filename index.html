@@ -36,6 +36,7 @@
       <a href="#club">El club</a>
       <a href="#horarios">Horarios</a>
       <a href="reglamento.html">Reglamento</a>
+      <a href="jugar.html">Jugar</a>
       <a href="#inscripcion" class="nav-cta">Inscribirme</a>
     </nav>
   </div>
@@ -136,28 +137,9 @@
         <span class="section-eyebrow">Integrantes</span>
         <h2>Los integrantes del club</h2>
       </div>
-      <ul class="members-grid">
-        <li class="member-item reveal"><span class="member-num">01</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">02</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">03</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">04</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">05</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">06</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">07</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">08</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">09</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">10</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">11</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">12</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">13</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">14</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">15</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">16</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">17</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">18</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">19</span>Nombre de integrante</li>
-        <li class="member-item reveal"><span class="member-num">20</span>Nombre de integrante</li>
-      </ul>
+      <div id="listaIntegrantes">
+        <p>Cargando integrantes...</p>
+      </div>
     </div>
   </section>
 
@@ -279,10 +261,10 @@
             <label for="n-curso">Curso y división</label>
             <input type="text" id="n-curso" name="curso" placeholder="Ej: 2º 3ª" required>
 
-            <label for="n-contacto">Mail o teléfono de contacto</label>
+            <label for="n-contacto">Email o Telefono</label>
             <input type="text" id="n-contacto" name="contacto" placeholder="Mail o WhatsApp" required>
 
-            <label for="n-comentario">¿Algo que quieras contarnos? (opcional)</label>
+           <label for="n-comentario">¿Algo que quieras contarnos? (opcional)</label>
             <textarea id="n-comentario" name="comentario" placeholder="Por ejemplo, días en los que no podés venir" rows="3"></textarea>
 
             <button type="submit" class="btn btn-gold">Inscribirme como nuevo</button>
@@ -343,6 +325,7 @@
         <a href="#aprender">Aprender</a>
         <a href="#horarios">Horarios</a>
         <a href="reglamento.html">Reglamento</a>
+        <a href="jugar.html">Jugar</a>
         <a href="#inscripcion">Inscribirme</a>
       </nav>
     </div>
@@ -361,6 +344,96 @@
 </a>
 
 <script src="script.js"></script>
+
+<!-- ================================================================= -->
+<!-- CONEXIÓN A SUPABASE + FORMSPREE PARA LOS FORMULARIOS DE INSCRIPCIÓN -->
+<!-- Pegá este bloque una sola vez, antes de </body>, DESPUÉS de la      -->
+<!-- sección #inscripcion que ya tenés en tu HTML.                       -->
+<!-- ================================================================= -->
+
+<!-- Cliente de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const SUPABASE_URL = "https://znsvqbcozbkcucpwltzj.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpuc3ZxYmNvemJrY3VjcHdsdHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MDg2NzQsImV4cCI6MjEwMDk4NDY3NH0.i9isNzVLLNiGkrNRxJJLqjaFEL1Hx9mlMPM5u6yn9jQ";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const TABLA = "Integrantes"; // nombre exacto de la tabla en Supabase
+
+  // ---------- Mostrar lista pública (solo Nombre y Curso) ----------
+  async function cargarIntegrantes() {
+    const contenedor = document.getElementById('listaIntegrantes');
+    const { data, error } = await supabaseClient
+      .from(TABLA)
+      .select('Nombre, Curso')
+      .order('Nombre', { ascending: true });
+
+    if (error) {
+      contenedor.innerHTML = '<p>No se pudo cargar la lista.</p>';
+      console.error(error);
+      return;
+    }
+    if (!data.length) {
+      contenedor.innerHTML = '<p>Todavía no hay integrantes anotados.</p>';
+      return;
+    }
+    contenedor.innerHTML = '<ul>' +
+      data.map(p => `<li>${p.Nombre} — ${p.Curso}</li>`).join('') +
+      '</ul>';
+  }
+
+  // ---------- Conectar los dos formularios de inscripción ----------
+  document.querySelectorAll('.club-form').forEach(form => {
+    const status = form.querySelector('.form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (status) { status.textContent = 'Enviando...'; status.className = 'form-status'; }
+      if (submitBtn) submitBtn.disabled = true;
+
+      const fd = new FormData(form);
+      const nombre = (fd.get('nombre') || '').toString().trim();
+      const curso = (fd.get('curso') || '').toString().trim();
+      const email = (fd.get('contacto') || '').toString().trim();
+      const mas = (fd.get('comentario') || fd.get('torneos') || '').toString().trim();
+
+      try {
+        // 1) Guardar en Supabase (para la lista pública)
+        const { error } = await supabaseClient
+          .from(TABLA)
+          .insert([{ Nombre: nombre, Email: email, Curso: curso, "Más": mas }]);
+
+        if (error) throw error;
+
+        // 2) Enviar también a Formspree (mantiene el aviso por email como antes)
+        await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: fd
+        });
+
+        if (status) { status.textContent = '¡Listo, te inscribiste!'; status.className = 'form-status success'; }
+        form.reset();
+        cargarIntegrantes();
+      } catch (err) {
+        console.error(err);
+        if (status) { status.textContent = 'Hubo un error, intentá de nuevo.'; status.className = 'form-status error'; }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  });
+
+  cargarIntegrantes();
+
+});
+</script>
+
 </body>
 </html>
 

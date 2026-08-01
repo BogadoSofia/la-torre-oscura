@@ -18,40 +18,9 @@ if (tabNuevos && tabExperiencia) {
   tabExperiencia.addEventListener('click', () => activarTab(tabExperiencia, tabNuevos, panelExperiencia, panelNuevos));
 }
 
-// Envío de formularios a Formspree sin recargar la página
-document.querySelectorAll('.club-form').forEach(form => {
-  const statusEl = form.querySelector('.form-status');
-  const submitBtn = form.querySelector('button[type="submit"]');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    statusEl.textContent = 'Enviando...';
-    statusEl.className = 'form-status';
-    submitBtn.disabled = true;
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        statusEl.textContent = form.dataset.success || 'Listo, recibimos tu inscripción. Nos vemos en el club.';
-        statusEl.className = 'form-status success';
-        form.reset();
-      } else {
-        statusEl.textContent = 'No se pudo enviar. Probá de nuevo en un momento.';
-        statusEl.className = 'form-status error';
-      }
-    } catch (err) {
-      statusEl.textContent = 'Hubo un problema de conexión. Probá de nuevo.';
-      statusEl.className = 'form-status error';
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
-});
+// El envío de .club-form (Supabase + Formspree) se maneja en el script
+// inline al final de index.html, para no tener dos listeners de submit
+// compitiendo sobre el mismo formulario.
 
 // Carrusel de fotos del club
 const carousel = document.getElementById('clubCarousel');
