@@ -1789,6 +1789,10 @@ section {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
+.pieza-fantasma.pieza-viaje {
+  transition: left 160ms ease, top 160ms ease;
+}
+
 .pieza.color-blancas {
   background-color: var(--piece-white);
 }

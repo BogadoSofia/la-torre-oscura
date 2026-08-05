@@ -289,7 +289,6 @@ function makeMove(game, move) {
 
 const PUZZLES = [
   {
-    puntos: 10,
     piezas: [
       { square: 'd1', type: 'r', color: 'w' },
       { square: 'h2', type: 'p', color: 'w' },
@@ -299,12 +298,38 @@ const PUZZLES = [
       { square: 'e4', type: 'p', color: 'w' },
       { square: 'e6', type: 'b', color: 'w' },
       { square: 'b2', type: 'r', color: 'b' },
-      { square: 'f4', type: 'n', color: 'b' },
+      { square: 'f4', type: 'b', color: 'b' },
       { square: 'd4', type: 'p', color: 'b' },
       { square: 'g7', type: 'k', color: 'b' },
     ],
     piezaJugable: 'b2',
     solucion: 'h2',
+  },
+  {
+    piezas: [
+      { square: 'b1', type: 'k', color: 'w' },
+      { square: 'a2', type: 'p', color: 'w' },
+      { square: 'b2', type: 'p', color: 'w' },
+      { square: 'c2', type: 'p', color: 'w' },
+      { square: 'e3', type: 'p', color: 'w' },
+      { square: 'h3', type: 'r', color: 'w' },
+      { square: 'h4', type: 'p', color: 'w' },
+      { square: 'b5', type: 'n', color: 'w' },
+      { square: 'e1', type: 'r', color: 'w' },
+      { square: 'd4', type: 'p', color: 'b' },
+      { square: 'c5', type: 'p', color: 'b' },
+      { square: 'b6', type: 'p', color: 'b' },
+      { square: 'e7', type: 'k', color: 'b' },
+      { square: 'd7', type: 'p', color: 'b' },
+      { square: 'f7', type: 'p', color: 'b' },
+      { square: 'g7', type: 'p', color: 'b' },
+      { square: 'h7', type: 'p', color: 'b' },
+      { square: 'f1', type: 'q', color: 'b' },
+      { square: 'f8', type: 'b', color: 'b' },
+      { square: 'h8', type: 'r', color: 'b' },
+    ],
+    piezaJugable: 'f1',
+    solucion: 'e1',
   },
 ];
 
@@ -316,6 +341,10 @@ const SUPABASE_URL = "https://znsvqbcozbkcucpwltzj.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpuc3ZxYmNvemJrY3VjcHdsdHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MDg2NzQsImV4cCI6MjEwMDk4NDY3NH0.i9isNzVLLNiGkrNRxJJLqjaFEL1Hx9mlMPM5u6yn9jQ";
 const rankingClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const TABLA_RANKING = "Ranking";
+const PENALIZACION_ERROR = 4;
+const PENALIZACION_PISTA = 5;
+const PUNTOS_PUZZLE_PERFECTO = 20;
+const CLAVE_PROBLEMAS_RESUELTOS = 'problemasResueltos';
 
 async function sumarPuntos(cantidad) {
   const nombre = localStorage.getItem('miNombreRanking');
@@ -332,9 +361,11 @@ async function sumarPuntos(cantidad) {
     return;
   }
 
+  const nuevoPuntaje = Math.max(0, data.Puntos + cantidad);
+
   const { error: updateError } = await rankingClient
     .from(TABLA_RANKING)
-    .update({ Puntos: data.Puntos + cantidad })
+    .update({ Puntos: nuevoPuntaje })
     .eq('Nombre', nombre);
 
   if (updateError) console.error('No se pudo actualizar el puntaje:', updateError);
@@ -501,6 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const puzzleWinModal = document.getElementById('puzzleWinModal');
   const puzzleWinTexto = document.getElementById('puzzleWinTexto');
   const puzzleSiguienteBtn = document.getElementById('puzzleSiguienteBtn');
+  const puzzleAnteriorBtn = document.getElementById('puzzleAnteriorBtn');
   const pistaBtn = document.getElementById('pistaBtn');
   const pistaFlecha = document.getElementById('pistaFlecha');
   const pistaFlechaLinea = document.getElementById('pistaFlechaLinea');
@@ -526,6 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let puzzleTargets = [];
   let puntosTotales = 0;
   let pistaNivel = 0;
+  let puzzleWallet = PUNTOS_PUZZLE_PERFECTO;
+  const problemasResueltos = new Set(JSON.parse(localStorage.getItem(CLAVE_PROBLEMAS_RESUELTOS) || '[]'));
 
   for (let r = 0; r < 8; r++) {
     const span = document.createElement('span');
@@ -589,6 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const UMBRAL_ARRASTRE = 6;
   let arrastre = null;
+  let saltarAnimacionMovimiento = false;
 
   function iniciarPointerCasilla(e, r, c) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -654,7 +689,10 @@ document.addEventListener('DOMContentLoaded', () => {
     finalizarArrastreVisual();
     if (dragging) {
       const destino = casillaDesdeElemento(document.elementFromPoint(e.clientX, e.clientY));
-      if (destino) manejarTap(destino[0], destino[1]);
+      if (destino) {
+        saltarAnimacionMovimiento = true;
+        manejarTap(destino[0], destino[1]);
+      }
     } else {
       manejarTap(r, c);
     }
@@ -673,6 +711,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return span;
   }
 
+  function animarMovimientoRapido(origenR, origenC, destinoR, destinoC, piece) {
+    if (!piece) return;
+    const origenRect = squareButtons[origenR][origenC].getBoundingClientRect();
+    const destinoRect = squareButtons[destinoR][destinoC].getBoundingClientRect();
+
+    const ghost = crearPiezaEl(piece);
+    ghost.classList.add('pieza-fantasma', 'pieza-viaje');
+    ghost.style.width = (origenRect.width * 0.76) + 'px';
+    ghost.style.height = (origenRect.height * 0.76) + 'px';
+    ghost.style.left = (origenRect.left + origenRect.width / 2) + 'px';
+    ghost.style.top = (origenRect.top + origenRect.height / 2) + 'px';
+    document.body.appendChild(ghost);
+
+    requestAnimationFrame(() => {
+      ghost.style.left = (destinoRect.left + destinoRect.width / 2) + 'px';
+      ghost.style.top = (destinoRect.top + destinoRect.height / 2) + 'px';
+    });
+
+    ghost.addEventListener('transitionend', () => ghost.remove(), { once: true });
+    setTimeout(() => { if (ghost.isConnected) ghost.remove(); }, 400);
+  }
+
   function cargarPuzzle(index) {
     const def = PUZZLES[index];
     puzzleBoard = crearTableroPuzzle(def);
@@ -680,6 +740,8 @@ document.addEventListener('DOMContentLoaded', () => {
     puzzleTargets = [];
     puzzleWinModal.hidden = true;
     pistaNivel = 0;
+    puzzleWallet = PUNTOS_PUZZLE_PERFECTO;
+    puzzleAnteriorBtn.hidden = modo !== 'problemas' || index === 0;
     renderPuzzle();
   }
 
@@ -750,12 +812,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   pistaBtn.addEventListener('click', () => {
     if (modo !== 'problemas' || !puzzleBoard) return;
-    pistaNivel = pistaNivel >= 2 ? 0 : pistaNivel + 1;
+    if (pistaNivel >= 2) {
+      pistaNivel = 0;
+    } else {
+      pistaNivel += 1;
+      puzzleWallet = Math.max(0, puzzleWallet - PENALIZACION_PISTA);
+    }
     actualizarPista();
   });
 
   function onPuzzleSquareClick(r, c) {
     const def = PUZZLES[puzzleIndex];
+    const saltarAnimacion = saltarAnimacionMovimiento;
+    saltarAnimacionMovimiento = false;
 
     if (!puzzleSelected) {
       if (puzzleBoard[r][c]) {
@@ -784,16 +853,25 @@ document.addEventListener('DOMContentLoaded', () => {
     puzzleSelected = null;
     puzzleTargets = [];
     renderPuzzle();
+    if (!saltarAnimacion) animarMovimientoRapido(sr, sc, r, c, movingPiece);
 
     if (origenAlg === def.piezaJugable && destinoAlg === def.solucion) {
-      puntosTotales += def.puntos;
-      puzzleWinTexto.textContent = `Ganaste +${def.puntos} puntos`;
+      const yaResuelto = problemasResueltos.has(puzzleIndex);
+      const premio = yaResuelto ? 0 : puzzleWallet;
+      puntosTotales += premio;
+      puzzleWinTexto.textContent = yaResuelto ? 'Ya habías resuelto este problema' : `Ganaste +${premio} puntos`;
       puzzleWinModal.hidden = false;
       pistaNivel = 0;
-      sumarPuntos(def.puntos);
+      if (!yaResuelto) {
+        problemasResueltos.add(puzzleIndex);
+        localStorage.setItem(CLAVE_PROBLEMAS_RESUELTOS, JSON.stringify([...problemasResueltos]));
+        sumarPuntos(premio);
+      }
       renderPuzzle();
       return;
     }
+
+    puzzleWallet = Math.max(0, puzzleWallet - PENALIZACION_ERROR);
 
     setTimeout(() => {
       puzzleBoard[sr][sc] = movingPiece;
@@ -908,6 +986,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (botPensando || partidaTerminada()) return;
     if (modo === 'bot' && game.turn === BOT_COLOR) return;
 
+    const saltarAnimacion = saltarAnimacionMovimiento;
+    saltarAnimacionMovimiento = false;
+
     const piece = game.board[r][c];
 
     if (selected) {
@@ -923,6 +1004,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         makeMove(game, move);
         despuesDeJugada();
+        if (!saltarAnimacion) {
+          animarMovimientoRapido(move.from[0], move.from[1], move.to[0], move.to[1], move.piece);
+        }
         return;
       }
       if (piece && piece.color === game.turn) {
@@ -983,6 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modoProblemasBtn.classList.toggle('is-active', modo === 'problemas');
     resetBtn.textContent = modo === 'problemas' ? 'Reiniciar problema' : 'Reiniciar partida';
     pistaBtn.hidden = modo !== 'problemas';
+    puzzleAnteriorBtn.hidden = modo !== 'problemas';
     pistaNivel = 0;
     pistaFlecha.hidden = true;
     promoModal.hidden = true;
@@ -1006,6 +1091,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   finModalReiniciar.addEventListener('click', reiniciar);
   finModalCerrar.addEventListener('click', () => { finModal.hidden = true; });
+  puzzleAnteriorBtn.addEventListener('click', () => {
+    if (puzzleIndex === 0) return;
+    puzzleIndex -= 1;
+    cargarPuzzle(puzzleIndex);
+  });
   puzzleSiguienteBtn.addEventListener('click', () => {
     puzzleWinModal.hidden = true;
     const next = puzzleIndex + 1;
