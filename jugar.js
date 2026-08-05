@@ -331,6 +331,30 @@ const PUZZLES = [
     piezaJugable: 'f1',
     solucion: 'e1',
   },
+  {
+    piezas: [
+      { square: 'a1', type: 'k', color: 'w' },
+      { square: 'a3', type: 'p', color: 'w' },
+      { square: 'c2', type: 'p', color: 'w' },
+      { square: 'f1', type: 'b', color: 'w' },
+      { square: 'f2', type: 'p', color: 'w' },
+      { square: 'f3', type: 'n', color: 'w' },
+      { square: 'g2', type: 'p', color: 'w' },
+      { square: 'h1', type: 'r', color: 'w' },
+      { square: 'h2', type: 'p', color: 'w' },
+      { square: 'a7', type: 'p', color: 'b' },
+      { square: 'b8', type: 'r', color: 'b' },
+      { square: 'd5', type: 'q', color: 'b' },
+      { square: 'e6', type: 'b', color: 'b' },
+      { square: 'f7', type: 'p', color: 'b' },
+      { square: 'f8', type: 'r', color: 'b' },
+      { square: 'g6', type: 'p', color: 'b' },
+      { square: 'g7', type: 'k', color: 'b' },
+      { square: 'h7', type: 'p', color: 'b' },
+    ],
+    piezaJugable: 'd5',
+    solucion: 'a2',
+  },
 ];
 
 // ==========================================================
@@ -599,7 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function puedeArrastrarDesde(r, c) {
     const piece = piezaEnCasilla(r, c);
     if (!piece) return false;
-    if (modo === 'problemas') return true;
+    if (modo === 'problemas') return piece.color === 'b';
     if (botPensando || partidaTerminada()) return false;
     if (modo === 'bot' && game.turn === BOT_COLOR) return false;
     return piece.color === game.turn;
@@ -827,7 +851,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saltarAnimacionMovimiento = false;
 
     if (!puzzleSelected) {
-      if (puzzleBoard[r][c]) {
+      if (puzzleBoard[r][c] && puzzleBoard[r][c].color === 'b') {
         puzzleSelected = [r, c];
         puzzleTargets = movimientosPuzzle(puzzleBoard, r, c);
         renderPuzzle();
