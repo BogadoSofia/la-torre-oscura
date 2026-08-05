@@ -1428,6 +1428,12 @@ section {
 
 .ranking-item.es-yo {
   border-color: var(--gold);
+  background: rgba(201, 162, 39, 0.1);
+}
+
+.ranking-item.es-bloqueado {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .ranking-pos {

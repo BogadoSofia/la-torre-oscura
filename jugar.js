@@ -1040,10 +1040,32 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarRanking();
   }
 
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[ch]));
+  }
+
+  async function reclamarNombre(nombre) {
+    const { error } = await rankingClient
+      .from(TABLA_RANKING)
+      .update({ Reclamado: true })
+      .eq('Nombre', nombre)
+      .eq('Reclamado', false);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    localStorage.setItem('miNombreRanking', nombre);
+    cargarRanking();
+  }
+
   async function cargarRanking() {
     const { data, error } = await rankingClient
       .from(TABLA_RANKING)
-      .select('Nombre, Puntos')
+      .select('Nombre, Puntos, Reclamado')
       .order('Puntos', { ascending: false });
 
     if (error) {
@@ -1059,27 +1081,37 @@ document.addEventListener('DOMContentLoaded', () => {
       rankingListaEl.innerHTML = '<p>Todavía no hay nadie en el ranking.</p>';
     } else {
       rankingListaEl.innerHTML = '<ul class="ranking-list">' +
-        data.map((j, i) => `
-          <li class="ranking-item${j.Nombre === miNombre ? ' es-yo' : ''}" data-nombre="${j.Nombre}">
-            <span class="ranking-pos">#${i + 1}</span>
-            <span class="ranking-nombre">${j.Nombre}</span>
-            <span class="ranking-puntos">${j.Puntos} pts</span>
-          </li>
-        `).join('') +
+        data.map((j, i) => {
+          const esYo = j.Nombre === miNombre;
+          const bloqueado = !!j.Reclamado && !esYo;
+          const clases = ['ranking-item'];
+          if (esYo) clases.push('es-yo');
+          if (bloqueado) clases.push('es-bloqueado');
+          return `
+            <li class="${clases.join(' ')}" data-nombre="${escapeHtml(j.Nombre)}" data-reclamado="${!!j.Reclamado}">
+              <span class="ranking-pos">#${i + 1}</span>
+              <span class="ranking-nombre">${escapeHtml(j.Nombre)}</span>
+              <span class="ranking-puntos">${j.Puntos} pts</span>
+            </li>
+          `;
+        }).join('') +
         '</ul>';
 
       rankingListaEl.querySelectorAll('.ranking-item').forEach(item => {
         let lastTap = 0;
         const alDobleClick = () => {
           const nombreActualDispositivo = localStorage.getItem('miNombreRanking');
-          if (item.dataset.nombre === nombreActualDispositivo) {
-            renombrarMiPerfil(item.dataset.nombre);
-          } else {
-            localStorage.setItem('miNombreRanking', item.dataset.nombre);
-            rankingIdentStatusEl.textContent = `Listo, te identificamos como "${item.dataset.nombre}" en este dispositivo.`;
-            rankingIdentStatusEl.className = 'form-status success';
-            cargarRanking();
+          const esMio = item.dataset.nombre === nombreActualDispositivo;
+          const reclamado = item.dataset.reclamado === 'true';
+
+          if (reclamado && !esMio) {
+            return;
           }
+          if (esMio) {
+            renombrarMiPerfil(item.dataset.nombre);
+            return;
+          }
+          reclamarNombre(item.dataset.nombre);
         };
         item.addEventListener('dblclick', alDobleClick);
         item.addEventListener('touchend', () => {
@@ -1107,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const { error } = await rankingClient
       .from(TABLA_RANKING)
-      .insert([{ Nombre: nombre, Puntos: 0 }]);
+      .insert([{ Nombre: nombre, Puntos: 0, Reclamado: true }]);
 
     if (error) {
       rankingStatusEl.textContent = 'Ese nombre ya existe o hubo un error. Si ya estás en la lista, hacé doble clic en tu nombre.';
