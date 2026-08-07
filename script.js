@@ -1,23 +1,3 @@
-// Tabs de formularios (nuevos / con experiencia)
-const tabNuevos = document.getElementById('tabNuevos');
-const tabExperiencia = document.getElementById('tabExperiencia');
-const panelNuevos = document.getElementById('panelNuevos');
-const panelExperiencia = document.getElementById('panelExperiencia');
-
-function activarTab(tabActivo, tabInactivo, panelActivo, panelInactivo) {
-  tabActivo.classList.add('is-active');
-  tabActivo.setAttribute('aria-selected', 'true');
-  tabInactivo.classList.remove('is-active');
-  tabInactivo.setAttribute('aria-selected', 'false');
-  panelActivo.hidden = false;
-  panelInactivo.hidden = true;
-}
-
-if (tabNuevos && tabExperiencia) {
-  tabNuevos.addEventListener('click', () => activarTab(tabNuevos, tabExperiencia, panelNuevos, panelExperiencia));
-  tabExperiencia.addEventListener('click', () => activarTab(tabExperiencia, tabNuevos, panelExperiencia, panelNuevos));
-}
-
 // El envío de .club-form (Supabase + Formspree) se maneja en el script
 // inline al final de index.html, para no tener dos listeners de submit
 // compitiendo sobre el mismo formulario.

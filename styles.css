@@ -12,8 +12,6 @@
   --gold: #C9A227;
   --gold-light: #E0C158;
   --gold-metal: linear-gradient(100deg, #A8821E 0%, #D9B53A 24%, #F0D670 50%, #D9B53A 76%, #A8821E 100%);
-  --gold-metal-dark: #A8821E;
-  --gold-metal-bright: #F0D670;
   --gray-text: #6B7280;
   --gray-text-dark: #9CA3AF;
   --text-dark: #11141F;
@@ -453,31 +451,6 @@ section {
    GRID ACTIVIDADES
    ==================================== */
 
-.activity-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-
-.activity-card {
-  position: relative;
-  border-radius: 6px;
-  overflow: hidden;
-  aspect-ratio: 4/5;
-  background: var(--off-white);
-}
-
-.activity-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.activity-card:hover img {
-  transform: scale(1.04);
-}
-
 .activity-caption {
   position: absolute;
   bottom: 0;
@@ -900,9 +873,6 @@ section {
   .hero {
     padding: 72px 0 60px;
   }
-  .activity-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 880px) {
@@ -960,13 +930,6 @@ section {
     padding: 13px 0;
     color: var(--gray-text-dark);
   }
-  .activity-grid {
-    grid-template-columns: 1fr;
-  }
-  /* Tarjetas menos altas en columna única */
-  .activity-card {
-    aspect-ratio: 3/2;
-  }
   .schedule-strip .container {
     flex-direction: column;
     align-items: flex-start;
@@ -1018,10 +981,6 @@ section {
    REGLAMENTO
    ==================================== */
 
-.section-light {
-  background: var(--off-white);
-}
-
 .page-hero {
   background: var(--bg-dark);
   color: var(--white);
@@ -1068,13 +1027,6 @@ section {
 
 .toc-nav a:hover {
   color: var(--gold);
-}
-
-.chapter-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
 }
 
 .chapter h2 {
@@ -1162,13 +1114,6 @@ section {
   color: var(--gray-text-dark);
 }
 
-@media (max-width: 880px) {
-  .chapter-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
 /* Scroll offset para el header sticky en index.html */
 #club, #aprender, #inscripcion, #integrantes, #horarios {
   scroll-margin-top: 72px;
@@ -1208,13 +1153,6 @@ section {
     font-size: 13px;
     padding: 10px 8px;
     text-align: center;
-  }
-  /* Activity grid: columna única */
-  .activity-grid {
-    grid-template-columns: 1fr;
-  }
-  .activity-card {
-    aspect-ratio: 3/2;
   }
   section {
     padding: 48px 0;

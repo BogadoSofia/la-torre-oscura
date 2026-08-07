@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Torre Oscura — Club de Ajedrez | Colegio Secundario Manuel Belgrano</title>
-<meta name="description" content="Club de ajedrez del Colegio Secundario Manuel Belgrano. Clases para principiantes, torneos internos y actividad libre en los recreos. Sumate los miércoles y viernes.">
+<meta name="description" content="Club de ajedrez del Colegio Secundario Manuel Belgrano. Clases para principiantes, torneos internos y actividad libre en los recreos. Sumate los viernes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
       <div class="hero-meta">
         <div>
           <strong>Días</strong>
-          Miércoles y viernes
+          Viernes
         </div>
         <div>
           <strong>Horario</strong>
@@ -137,6 +137,7 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">Integrantes</span>
         <h2>Los integrantes del club</h2>
+        <p>Nos encontramos los viernes de 17:50 a 19:00 (asistencia obligatoria para quienes asisten ese día).</p>
       </div>
       <div id="listaIntegrantes">
         <p>Cargando integrantes...</p>
@@ -160,7 +161,7 @@
         <div class="step reveal">
           <span class="step-num">02</span>
           <h3>Vení a tu primera clase</h3>
-          <p>Miércoles o viernes de 17:50 a 19:00. El profesor te enseña según tu experiencia.</p>
+          <p>Viernes de 17:50 a 19:00. El profesor te enseña según tu experiencia.</p>
         </div>
         <div class="step reveal">
           <span class="step-num">03</span>
@@ -184,13 +185,13 @@
           <div class="sched-days">
             <span class="sched-day">Lun</span>
             <span class="sched-day">Mar</span>
-            <span class="sched-day active">Mié</span>
+            <span class="sched-day">Mié</span>
             <span class="sched-day">Jue</span>
             <span class="sched-day active">Vie</span>
           </div>
-          <h3>Clases del club</h3>
+          <h3>Asistencia obligatoria</h3>
           <p class="sched-time">17:50 — 19:00 hs</p>
-          <p class="sched-desc">Clases con el profesor Hugo Ojeda. El nivel de cada alumno determina el ritmo: desde las reglas básicas hasta la estrategia avanzada.</p>
+          <p class="sched-desc">Encuentro semanal obligatorio para los integrantes que asisten los viernes.</p>
           <span class="sched-place">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -238,24 +239,16 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">Inscripción</span>
         <h2>Tu primera partida puede ser hoy</h2>
-        <p>Elegí el formulario que te corresponde. Sumate al club, sin importar si no tenes experiencia o si ya jugás hace años.</p>
-      </div>
-
-      <div class="form-tabs reveal" role="tablist" aria-label="Tipo de inscripción">
-        <button type="button" class="form-tab is-active" id="tabNuevos" role="tab" aria-selected="true" aria-controls="panelNuevos">Nunca jugué</button>
-        <button type="button" class="form-tab" id="tabExperiencia" role="tab" aria-selected="false" aria-controls="panelExperiencia">Ya juego / tengo experiencia</button>
+        <p>Completá el formulario para sumarte al club, sin importar tu experiencia previa.</p>
       </div>
 
       <div class="form-grid">
 
-        <div class="form-card reveal" id="panelNuevos" role="tabpanel" aria-labelledby="tabNuevos">
-          <span class="form-card-tag">Sin experiencia</span>
-          <h3>Inscripción para nuevos</h3>
-          <p class="form-card-sub">No necesitás saber nada. El profesor te ubica desde cero.</p>
+        <div class="form-card reveal" id="panelNuevos">
+          <h3>Inscripción al club</h3>
+          <p class="form-card-sub">Contanos un poco sobre vos y el profesor te ubica según tu nivel.</p>
 
           <form action="https://formspree.io/f/xqevnzvw" method="POST" class="club-form">
-            <input type="hidden" name="tipo_inscripcion" value="Nuevo / sin experiencia">
-
             <label for="n-nombre">Nombre y apellido</label>
             <input type="text" id="n-nombre" name="nombre" placeholder="Nombre y apellido" required>
 
@@ -266,35 +259,9 @@
             <input type="text" id="n-contacto" name="contacto" placeholder="Mail o WhatsApp" required>
 
            <label for="n-comentario">¿Algo que quieras contarnos? (opcional)</label>
-            <textarea id="n-comentario" name="comentario" placeholder="Por ejemplo, días en los que no podés venir" rows="3"></textarea>
+            <textarea id="n-comentario" name="comentario" placeholder="Por ejemplo, tu experiencia previa o días en los que no podés venir" rows="3"></textarea>
 
-            <button type="submit" class="btn btn-gold">Inscribirme como nuevo</button>
-            <p class="form-status" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div class="form-card reveal" id="panelExperiencia" role="tabpanel" aria-labelledby="tabExperiencia" hidden>
-          <span class="form-card-tag">Con experiencia</span>
-          <h3>Inscripción para jugadores con experiencia</h3>
-          <p class="form-card-sub">Contanos tu nivel para ubicarte en la categoría correcta del torneo.</p>
-
-          <form action="https://formspree.io/f/xqevnzvw" method="POST" class="club-form">
-            <input type="hidden" name="tipo_inscripcion" value="Con experiencia">
-
-            <label for="e-nombre">Nombre y apellido</label>
-            <input type="text" id="e-nombre" name="nombre" placeholder="Nombre y apellido" required>
-
-            <label for="e-curso">Curso y división</label>
-            <input type="text" id="e-curso" name="curso" placeholder="Ej: 4º 1ª" required>
-
-            <label for="e-contacto">Mail o teléfono de contacto</label>
-            <input type="text" id="e-contacto" name="contacto" placeholder="Mail o WhatsApp" required>
-
-
-            <label for="e-torneos">¿Jugaste torneos antes? ¿Cuáles?</label>
-            <textarea id="e-torneos" name="torneos" placeholder="Contanos brevemente tu experiencia previa" rows="3"></textarea>
-
-            <button type="submit" class="btn btn-gold">Inscribirme con mi experiencia</button>
+            <button type="submit" class="btn btn-gold">Inscribirme al club</button>
             <p class="form-status" aria-live="polite"></p>
           </form>
         </div>
@@ -387,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
       '</ul>';
   }
 
-  // ---------- Conectar los dos formularios de inscripción ----------
+  // ---------- Conectar el formulario de inscripción ----------
   document.querySelectorAll('.club-form').forEach(form => {
     const status = form.querySelector('.form-status');
     const submitBtn = form.querySelector('button[type="submit"]');
